@@ -1,8 +1,41 @@
 package View;
 
+import Dao.ProfessorDao;
+import Entidades.Genero;
+import Entidades.Professor;
+import Models.ProfessorListModel;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import javax.swing.DefaultComboBoxModel;
+
 public class FrmProfessor extends javax.swing.JFrame {
-    public FrmProfessor() {
+    private boolean editar;
+    private ProfessorListModel professorListModel;
+    private int id;
+    private int linhaSelecionada;
+    private Professor professor;
+    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    
+    public FrmProfessor(boolean editar, int id,  ProfessorListModel  professorListModel, int linhaSelecionada, Professor professor) {
         initComponents();
+        this.professor = professor;
+        cbSexo.setModel(new DefaultComboBoxModel(Genero.values()));
+        this.editar = editar;
+        this.professorListModel = professorListModel;
+        this.linhaSelecionada = linhaSelecionada;
+        if (id > 0){
+            this.id = id;
+        }else{
+            this.id = 0;
+        }
+        if (editar){
+            tfCpf.setText(professor.getCpf());
+            tfDataNasc.setText(dtf.format(professor.getDataNasc()));
+            tfEmail.setText(professor.getEmail());
+            tfNome.setText(professor.getNome());
+            tfDisciplina.setText(professor.getDisciplina());
+            cbSexo.setSelectedIndex(professor.getGenero().ordinal());
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -27,7 +60,7 @@ public class FrmProfessor extends javax.swing.JFrame {
         tfDataNasc = new javax.swing.JFormattedTextField();
         btCadastrarNotas = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GestMais - Cadastro de aluno");
 
         pnTitulo.setBackground(new java.awt.Color(51, 51, 51));
@@ -74,9 +107,19 @@ public class FrmProfessor extends javax.swing.JFrame {
 
         btCancelar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btCancelar.setText("Cancelar");
+        btCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelarActionPerformed(evt);
+            }
+        });
 
         btSalvar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btSalvar.setText("Salvar");
+        btSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalvarActionPerformed(evt);
+            }
+        });
 
         cbSexo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         cbSexo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Feminino", "Outro" }));
@@ -94,7 +137,7 @@ public class FrmProfessor extends javax.swing.JFrame {
             }
         });
 
-        tfDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
+        tfDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/YYYY"))));
         tfDataNasc.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         btCadastrarNotas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -177,13 +220,14 @@ public class FrmProfessor extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_tfEmailActionPerformed
 
-    public static void main(String args[]) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FrmProfessor().setVisible(true);
-            }
-        });
-    }
+    private void btSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvarActionPerformed
+        salvar();
+    }//GEN-LAST:event_btSalvarActionPerformed
+
+    private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
+        dispose();
+    }//GEN-LAST:event_btCancelarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCadastrarNotas;
@@ -204,4 +248,35 @@ public class FrmProfessor extends javax.swing.JFrame {
     private javax.swing.JTextField tfEmail;
     private javax.swing.JTextField tfNome;
     // End of variables declaration//GEN-END:variables
+
+    private void getProfessor() {
+        if (this.professor == null) {
+            this.professor = new Professor(tfDisciplina.getText(), this.id, tfNome.getText(), 
+                                          (Genero) cbSexo.getSelectedItem(), tfEmail.getText(), 
+                                           tfCpf.getText(), LocalDate.parse(tfDataNasc.getText(), dtf));
+        }else{
+            this.professor.setCpf(tfCpf.getText());
+            this.professor.setDisciplina(tfDisciplina.getText());
+            this.professor.setNome(tfNome.getText());
+            this.professor.setEmail(tfEmail.getText());
+            this.professor.setId(this.id);
+            this.professor.setGenero((Genero) cbSexo.getSelectedItem());
+            this.professor.setDataNasc(LocalDate.parse(tfDataNasc.getText(), dtf));
+        }
+    }
+    
+    private void salvar(){
+        getProfessor();
+        ProfessorDao professorDao = new ProfessorDao();
+        if (!this.editar) {
+            professorDao.insert(professor);
+            this.professorListModel.insertModel(professor);
+            dispose();
+        } else {
+            professor.setId(this.id);
+            professorDao.update(professor);
+            this.professorListModel.atualizarModel(linhaSelecionada, professor);
+            this.dispose();            
+        }
+    }
 }

@@ -126,10 +126,11 @@ public class AlunoDao extends AbstractDaoImpl<Aluno> {
     public Aluno mount(ResultSet res) {
         try {
             Genero sexo;
-            if (rs.getString("SEXO") == "Masculino"){
+            System.out.println(rs.getString("SEXO"));
+            if (rs.getString("SEXO").equals("Masculino")){
                 sexo = Genero.MASCULINO;
             }else{
-                if(rs.getString("SEXO") == "Feminino"){
+                if(rs.getString("SEXO").equals("Feminino")){
                     sexo = Genero.FEMININO;
                 }else{
                     sexo = Genero.OUTRO;

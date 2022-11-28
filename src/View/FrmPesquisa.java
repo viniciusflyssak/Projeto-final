@@ -9,9 +9,8 @@ import Entidades.Notas;
 import Models.AlunoListModel;
 import Models.NotasListModel;
 import Models.ProfessorListModel;
-import java.beans.PropertyVetoException;
 import java.util.List;
-import javax.swing.JDesktopPane;
+import javax.swing.JOptionPane;
 
 public class FrmPesquisa extends javax.swing.JInternalFrame {
     public int tipo;
@@ -58,6 +57,7 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
         btNovo = new javax.swing.JButton();
         btEditar = new javax.swing.JButton();
         btVoltar = new javax.swing.JButton();
+        btExcluir = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisa");
@@ -96,6 +96,14 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
             }
         });
 
+        btExcluir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btExcluir.setText("Excluir");
+        btExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btExcluirActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,6 +113,8 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -113,12 +123,13 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(spPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 303, Short.MAX_VALUE)
+                .addComponent(spPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btNovo)
                     .addComponent(btEditar)
-                    .addComponent(btVoltar))
+                    .addComponent(btVoltar)
+                    .addComponent(btExcluir))
                 .addContainerGap())
         );
 
@@ -157,8 +168,35 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
         }         
     }//GEN-LAST:event_btNovoActionPerformed
 
+    private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
+        int linhaSelecionada = tbPesquisa.getSelectedRow();  
+        if (linhaSelecionada >= 0) {
+            int opcao = JOptionPane.showConfirmDialog(null,
+                    "Deseja excluir o registro selecionado? ",
+                    "Exclusão", JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+            if (opcao == JOptionPane.YES_OPTION) {
+                if (tipo == 1){            
+                    excluirProfessor();
+                    professorListModel.removeModel(linhaSelecionada);
+                }else{
+                    if (tipo == 2){
+                        excluirAluno();
+                        alunoListModel.removeModel(linhaSelecionada);
+                    }else{
+                        if (tipo == 3){
+                            excluirNotas();
+                            notasListModel.removeModel(linhaSelecionada);
+                        }
+                    }
+                }         
+            }
+        }
+    }//GEN-LAST:event_btExcluirActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btEditar;
+    private javax.swing.JButton btExcluir;
     private javax.swing.JButton btNovo;
     private javax.swing.JButton btVoltar;
     private javax.swing.JScrollPane spPesquisa;
@@ -171,7 +209,7 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
             int id = (int) tbPesquisa.getValueAt(linhaSelecionada, 0);
             ProfessorDao professorDao = new ProfessorDao();
             Professor professor = professorDao.findById(id);
-            FrmProfessor frmProfessor = new FrmProfessor();
+            FrmProfessor frmProfessor = new FrmProfessor(true, id, professorListModel, linhaSelecionada, professor);
             frmProfessor.setVisible(true);
         }    
     }
@@ -188,7 +226,14 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
     }
     
     private void editarNotas(){
-        
+        int linhaSelecionada = tbPesquisa.getSelectedRow();
+        if (linhaSelecionada >= 0) {
+            int id = (int) tbPesquisa.getValueAt(linhaSelecionada, 0);
+            NotasDao notasDao = new NotasDao();
+            Notas notas = notasDao.findById(id);            
+            FrmNotas frmNotas = new FrmNotas(true, id, notasListModel, linhaSelecionada, notas);   
+            frmNotas.setVisible(true);
+        }    
     }
     
     private void novoAluno(){
@@ -200,11 +245,39 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
         frmAluno.setVisible(true);        
     }
     
-    private void novasNotas(){
-        
+    private void novasNotas(){        
+        int linhaSelecionada = tbPesquisa.getSelectedRow();           
+        int id = 0;
+        NotasDao notasDao = new NotasDao();
+        Notas notas = notasDao.findById(id);
+        FrmNotas frmNotas = new FrmNotas(false, id, notasListModel, linhaSelecionada, null);
+        frmNotas.setVisible(true);    
     }
     
     private void novoProfessor(){
-        
+        int linhaSelecionada = tbPesquisa.getSelectedRow();           
+        int id = 0;
+        ProfessorDao professorDao = new ProfessorDao();
+        Professor professor = professorDao.findById(id);
+        FrmProfessor frmProfessor = new FrmProfessor(false, id, professorListModel, linhaSelecionada, null);
+        frmProfessor.setVisible(true);   
+    }
+    
+    private void excluirProfessor(){
+        int id = (int) tbPesquisa.getValueAt(tbPesquisa.getSelectedRow(), 0);
+        ProfessorDao professorDao = new ProfessorDao();
+        professorDao.delete(id);
+    }
+    
+    private void excluirAluno(){
+        int id = (int) tbPesquisa.getValueAt(tbPesquisa.getSelectedRow(), 0);
+        AlunoDao alunoDao = new AlunoDao();
+        alunoDao.delete(id);
+    }
+    
+    private void excluirNotas(){
+        int id = (int) tbPesquisa.getValueAt(tbPesquisa.getSelectedRow(), 0);
+        NotasDao notasDao = new NotasDao();
+        notasDao.delete(id); 
     }
 }

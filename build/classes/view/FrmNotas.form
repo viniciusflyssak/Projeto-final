@@ -64,6 +64,7 @@
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
+    <SyntheticProperty name="generateCenter" type="boolean" value="false"/>
   </SyntheticProperties>
   <AuxValues>
     <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
@@ -82,55 +83,60 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="pnTitulo" max="32767" attributes="0"/>
           <Group type="102" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="lbAluno" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                       <Component id="tfIdAluno" max="32767" attributes="0"/>
                                   </Group>
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
                                       <Component id="lbNota1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="tfIdAluno3" min="-2" pref="26" max="-2" attributes="0"/>
+                                      <Component id="tfNota1" min="-2" pref="26" max="-2" attributes="0"/>
                                   </Group>
+                                  <Component id="lbProfessor" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="lbNota2" min="-2" max="-2" attributes="0"/>
+                                      <Component id="tfIdProfessor" min="-2" pref="25" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="tfIdAluno4" min="-2" pref="26" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="lbNota3" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="tfIdAluno2" min="-2" pref="26" max="-2" attributes="0"/>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="lbNota4" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="tfIdAluno5" min="-2" pref="26" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="lbNota2" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="tfNota2" min="-2" pref="26" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="lbNota3" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="tfNota3" min="-2" pref="26" max="-2" attributes="0"/>
+                                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              <Component id="lbNota4" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="tfNota4" min="-2" pref="26" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Component id="tfNomeProfessor" alignment="0" min="-2" pref="391" max="-2" attributes="0"/>
+                                      </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                                      <Component id="tfIdAluno1" max="32767" attributes="0"/>
-                                  </Group>
+                                  <Component id="tfNomeAluno" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lbAno" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="32767" attributes="0"/>
-                              <Component id="tfIdAluno6" min="-2" pref="55" max="-2" attributes="0"/>
+                              <Component id="tfAno" min="-2" pref="55" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="399" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="btCancelar1" min="-2" pref="100" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btSalvar1" min="-2" pref="100" max="-2" attributes="0"/>
@@ -144,34 +150,42 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" attributes="0">
               <Component id="pnTitulo" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <EmptySpace pref="15" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lbProfessor" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfIdProfessor" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfNomeProfessor" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lbAluno" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="tfIdAluno" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfIdAluno1" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="tfNomeAluno" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbAno" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfIdAluno6" alignment="3" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbAno" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfAno" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lbNota1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbNota2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbNota3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lbNota4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfNota3" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfNota1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfNota4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="tfNota2" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btCancelar1" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="btSalvar1" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="lbNota1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbNota2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbNota3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="lbNota4" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfIdAluno2" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfIdAluno3" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfIdAluno5" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="tfIdAluno4" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="btCancelar1" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btSalvar1" alignment="3" min="-2" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="0" pref="8" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -188,7 +202,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="lbTitulo" alignment="1" pref="548" max="32767" attributes="0"/>
+              <Component id="lbTitulo" alignment="1" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -284,42 +298,64 @@
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfIdAluno1">
+    <Component class="javax.swing.JTextField" name="tfNomeAluno">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="1"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfIdAluno2">
+    <Component class="javax.swing.JTextField" name="tfNota3">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="1"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfIdAluno3">
+    <Component class="javax.swing.JTextField" name="tfNota1">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="1"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfIdAluno4">
+    <Component class="javax.swing.JTextField" name="tfNota2">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="1"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfIdAluno5">
+    <Component class="javax.swing.JTextField" name="tfNota4">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="1"/>
         </Property>
       </Properties>
     </Component>
-    <Component class="javax.swing.JTextField" name="tfIdAluno6">
+    <Component class="javax.swing.JTextField" name="tfAno">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="14" style="1"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lbProfessor">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="14" style="1"/>
+        </Property>
+        <Property name="text" type="java.lang.String" value="Professor:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfIdProfessor">
+      <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Tahoma" size="14" style="1"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="tfNomeProfessor">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Tahoma" size="14" style="1"/>

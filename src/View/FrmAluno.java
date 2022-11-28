@@ -30,11 +30,11 @@ public class FrmAluno extends javax.swing.JFrame {
         }
         if (editar){
             tfCpf.setText(aluno.getCpf());
-            tfDataNasc.setText(aluno.getDataNasc().toString());
+            tfDataNasc.setText(dtf.format(aluno.getDataNasc()));
             tfEmail.setText(aluno.getEmail());
             tfNome.setText(aluno.getNome());
             tfSerie.setText(aluno.getSerie());
-            cbSexo.setSelectedIndex(id);
+            cbSexo.setSelectedIndex(aluno.getGenero().ordinal());
         }
     }
 
@@ -248,27 +248,34 @@ public class FrmAluno extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
 
     
-    private Aluno getLocacao() {
-        if (aluno == null) {
-            aluno = new Aluno(tfSerie.getText(), this.id, tfNome.getText(), 
+    private void getAluno() {
+        if (this.aluno == null) {
+            this.aluno = new Aluno(tfSerie.getText(), this.id, tfNome.getText(), 
                               (Genero) cbSexo.getSelectedItem(), tfEmail.getText(), 
                               tfCpf.getText(), LocalDate.parse(tfDataNasc.getText(), dtf));
+        }else{
+            this.aluno.setCpf(tfCpf.getText());
+            this.aluno.setSerie(tfSerie.getText());
+            this.aluno.setNome(tfNome.getText());
+            this.aluno.setEmail(tfEmail.getText());
+            this.aluno.setId(this.id);
+            this.aluno.setDataNasc(LocalDate.parse(tfDataNasc.getText(), dtf));
+            this.aluno.setGenero((Genero) cbSexo.getSelectedItem());
         }
-        return aluno;
     }
     
     private void salvar(){
-        Aluno aluno = getLocacao();
+        getAluno();
         AlunoDao alunoDao = new AlunoDao();
-        if (!editar) {
+        if (!this.editar) {
             alunoDao.insert(aluno);
-            alunoListModel.insertModel(aluno);
+            this.alunoListModel.insertModel(aluno);
             dispose();
         } else {
-            aluno.setId(this.id);
+            this.aluno.setId(this.id);
             alunoDao.update(aluno);
-            alunoListModel.atualizarModel(linhaSelecionada, aluno);
-            this.dispose();            
+            this.alunoListModel.atualizarModel(linhaSelecionada, aluno);
+            dispose();            
         }
     }
 }

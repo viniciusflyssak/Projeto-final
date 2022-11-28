@@ -63,7 +63,7 @@ public class ProfessorDao extends AbstractDaoImpl<Professor> {
     @Override
     public boolean delete(int id) {
         try {
-            pstm = getConn().prepareStatement("DELETE FROM PROFESSOR WHERE ID_PROFESSOR = ?");
+            pstm = getConn().prepareStatement("DELETE FROM PROFESSORES WHERE ID_PROFESSOR = ?");
             pstm.setInt(1, id);
             return pstm.executeUpdate() > 0;
         } catch (SQLException ex) {
@@ -105,7 +105,7 @@ public class ProfessorDao extends AbstractDaoImpl<Professor> {
             pstm.setString(3, professor.getGenero().toString());
             pstm.setDate(4, Date.valueOf(professor.getDataNasc()));
             pstm.setString(5, professor.getEmail());
-            pstm.setString(5, professor.getDisciplina());
+            pstm.setString(6, professor.getDisciplina());
             pstm.setInt(7, professor.getId());
             if (pstm.executeUpdate() > 0) {
                 return professor;
@@ -125,17 +125,17 @@ public class ProfessorDao extends AbstractDaoImpl<Professor> {
     public Professor mount(ResultSet res) {
         try {
             Genero sexo;
-            if (rs.getString("SEXO") == "Masculino"){
+            if (rs.getString("SEXO").equals("Masculino")){
                 sexo = Genero.MASCULINO;
             }else{
-                if(rs.getString("SEXO") == "Feminino"){
+                if(rs.getString("SEXO").equals("Feminino")){
                     sexo = Genero.FEMININO;
                 }else{
                     sexo = Genero.OUTRO;
                 }
             }
             Professor professor = new Professor(rs.getString("DISCIPLINA"), 
-                                                rs.getInt("ID_ALUNO"), 
+                                                rs.getInt("ID_PROFESSOR"), 
                                                 rs.getString("NOME"), 
                                                 sexo, 
                                                 rs.getString("EMAIL"), 
