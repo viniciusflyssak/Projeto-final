@@ -300,6 +300,9 @@
           <Font name="Tahoma" size="14" style="1"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tfIdAlunoFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfNomeAluno">
       <Properties>
@@ -357,6 +360,9 @@
           <Font name="Tahoma" size="14" style="1"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="focusLost" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="tfIdProfessorFocusLost"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="tfNomeProfessor">
       <Properties>

@@ -1,12 +1,10 @@
 package View;
 
 import Dao.NotasDao;
+import Entidades.Aluno;
 import Models.NotasListModel;
 import Entidades.Notas;
-import Entidades.Aluno;
-import Dao.AlunoDao;
 import Entidades.Professor;
-import Dao.ProfessorDao;
 
 public class FrmNotas extends javax.swing.JDialog {
     private final boolean editar;
@@ -17,6 +15,8 @@ public class FrmNotas extends javax.swing.JDialog {
     
     public FrmNotas(boolean editar, int id,  NotasListModel notasListModel, int linhaSelecionada, Notas notas) {
         initComponents();
+        this.tfNomeAluno.setEditable(false);
+        this.tfNomeProfessor.setEditable(false);
         this.notas = notas;
         this.editar = editar;
         this.notasListModel = notasListModel;
@@ -27,14 +27,10 @@ public class FrmNotas extends javax.swing.JDialog {
             this.id = 0;
         }
         if (editar){
-            AlunoDao alunoDao = new AlunoDao();
-            Aluno aluno = alunoDao.findById(this.notas.getIdAluno());
-            ProfessorDao professorDao = new ProfessorDao();
-            Professor professor = professorDao.findById(this.notas.getIdProfessor());
-            tfNomeAluno.setText(aluno.getNome());
-            tfNomeProfessor.setText(professor.getNome());
-            tfIdAluno.setText(String.valueOf(this.notas.getIdAluno()));
-            tfIdProfessor.setText(String.valueOf(this.notas.getIdProfessor()));
+            tfIdAluno.setText(String.valueOf(this.notas.getAluno().getId()));
+            tfIdProfessor.setText(String.valueOf(this.notas.getProfessor().getId()));
+            tfNomeAluno.setText(String.valueOf(this.notas.getAluno().getNome()));
+            tfNomeProfessor.setText(String.valueOf(this.notas.getProfessor().getNome()));
             tfAno.setText(String.valueOf(this.notas.getAno()));
             tfNota1.setText(String.valueOf(this.notas.getNota1()));
             tfNota2.setText(String.valueOf(this.notas.getNota2()));
@@ -158,6 +154,11 @@ public class FrmNotas extends javax.swing.JDialog {
         });
 
         tfIdAluno.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        tfIdAluno.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfIdAlunoFocusLost(evt);
+            }
+        });
 
         tfNomeAluno.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
@@ -175,6 +176,11 @@ public class FrmNotas extends javax.swing.JDialog {
         lbProfessor.setText("Professor:");
 
         tfIdProfessor.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        tfIdProfessor.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                tfIdProfessorFocusLost(evt);
+            }
+        });
 
         tfNomeProfessor.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
@@ -278,6 +284,14 @@ public class FrmNotas extends javax.swing.JDialog {
         salvar();
     }//GEN-LAST:event_btSalvar1ActionPerformed
 
+    private void tfIdProfessorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfIdProfessorFocusLost
+       buscaProfessor();
+    }//GEN-LAST:event_tfIdProfessorFocusLost
+
+    private void tfIdAlunoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfIdAlunoFocusLost
+       buscaAluno();
+    }//GEN-LAST:event_tfIdAlunoFocusLost
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btCancelar;
@@ -306,7 +320,7 @@ public class FrmNotas extends javax.swing.JDialog {
     private javax.swing.JTextField tfNota4;
     // End of variables declaration//GEN-END:variables
 
-    private void getAluno() {
+    private void getNotas() {
         if (this.notas == null) {
             this.notas = new Notas(this.id, Double.valueOf(tfNota1.getText()),
                                    Double.valueOf(tfNota2.getText()), Double.valueOf(tfNota3.getText()),
@@ -315,8 +329,8 @@ public class FrmNotas extends javax.swing.JDialog {
         }else{
             this.notas.setAno(Integer.valueOf(tfAno.getText()));
             this.notas.setId(this.id);
-            this.notas.setIdAluno(Integer.valueOf(tfIdAluno.getText()));
-            this.notas.setIdProfessor(Integer.valueOf(tfIdProfessor.getText()));
+            this.notas.getAluno().setId(Integer.valueOf(tfIdAluno.getText()));
+            this.notas.getProfessor().setId(Integer.valueOf(tfIdProfessor.getText()));
             this.notas.setNota1(Double.valueOf(tfNota1.getText()));
             this.notas.setNota2(Double.valueOf(tfNota2.getText()));
             this.notas.setNota3(Double.valueOf(tfNota3.getText()));
@@ -325,7 +339,7 @@ public class FrmNotas extends javax.swing.JDialog {
     }
     
     private void salvar(){
-        getAluno();
+        getNotas();
         NotasDao notasDao = new NotasDao();
         if (!this.editar) {
             notasDao.insert(notas);
@@ -339,4 +353,31 @@ public class FrmNotas extends javax.swing.JDialog {
         }
     }
     
+    private void buscaAluno(){
+        if (notas.getAluno()== null){
+            notas.setAluno(new Aluno());
+        }
+        notas.getAluno().setId(Integer.valueOf(tfIdAluno.getText()));
+        notas.buscaProfessor(); 
+        if (notas.getAluno() != null){
+            tfNomeAluno.setText(notas.getAluno().getNome());
+        }else{
+            tfNomeAluno.setText("Aluno não encontrado!");
+            tfIdAluno.setText("");
+        }
+    }
+    
+    private void buscaProfessor(){
+        if (notas.getProfessor() == null){
+            notas.setProfessor(new Professor());
+        }
+        notas.getProfessor().setId(Integer.valueOf(tfIdProfessor.getText()));
+        notas.buscaProfessor();
+        if (notas.getProfessor() != null){
+            tfNomeProfessor.setText(notas.getProfessor().getNome());
+        }else{
+            tfNomeProfessor.setText("Professor não encontrado!");
+            tfIdProfessor.setText("");
+        }
+    }
 }

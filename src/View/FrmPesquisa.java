@@ -23,6 +23,7 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
     public FrmPesquisa(int tipo) {
         initComponents();
         this.tipo =  tipo;
+        btMediaNotas.setVisible(tipo == 3);
         if (tipo == 1){
             super.setTitle("Pesquisa de professores");
             ProfessorDao professorDao = new ProfessorDao();
@@ -60,6 +61,7 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
         btExcluir = new javax.swing.JButton();
         tfPesquisa = new javax.swing.JTextField();
         btPesquisar = new javax.swing.JButton();
+        btMediaNotas = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -116,6 +118,14 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
             }
         });
 
+        btMediaNotas.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        btMediaNotas.setText("Média");
+        btMediaNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btMediaNotasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -132,6 +142,8 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btMediaNotas, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -153,7 +165,8 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
                     .addComponent(btNovo)
                     .addComponent(btEditar)
                     .addComponent(btVoltar)
-                    .addComponent(btExcluir))
+                    .addComponent(btExcluir)
+                    .addComponent(btMediaNotas))
                 .addContainerGap())
         );
 
@@ -224,9 +237,14 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
         pesquisar();
     }//GEN-LAST:event_btPesquisarActionPerformed
 
+    private void btMediaNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btMediaNotasActionPerformed
+        calcularMedia();
+    }//GEN-LAST:event_btMediaNotasActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btEditar;
     private javax.swing.JButton btExcluir;
+    private javax.swing.JButton btMediaNotas;
     private javax.swing.JButton btNovo;
     private javax.swing.JButton btPesquisar;
     private javax.swing.JButton btVoltar;
@@ -271,8 +289,6 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
     private void novoAluno(){
         int linhaSelecionada = tbPesquisa.getSelectedRow();           
         int id = 0;
-        AlunoDao alunoDao = new AlunoDao();
-        Aluno aluno = alunoDao.findById(id);
         FrmAluno frmAluno = new FrmAluno(false, id, alunoListModel, linhaSelecionada, null);
         frmAluno.setVisible(true);                
     }
@@ -280,8 +296,6 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
     private void novasNotas(){        
         int linhaSelecionada = tbPesquisa.getSelectedRow();           
         int id = 0;
-        NotasDao notasDao = new NotasDao();
-        Notas notas = notasDao.findById(id);
         FrmNotas frmNotas = new FrmNotas(false, id, notasListModel, linhaSelecionada, null);
         frmNotas.setVisible(true);          
     }
@@ -289,8 +303,6 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
     private void novoProfessor(){
         int linhaSelecionada = tbPesquisa.getSelectedRow();           
         int id = 0;
-        ProfessorDao professorDao = new ProfessorDao();
-        Professor professor = professorDao.findById(id);
         FrmProfessor frmProfessor = new FrmProfessor(false, id, professorListModel, linhaSelecionada, null);
         frmProfessor.setVisible(true);           
     }
@@ -315,30 +327,40 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
     
     private void pesquisar(){        
         if (tipo == 1){            
-                List<Professor> pesquisa = listaProfessores.stream()
+            List<Professor> pesquisa = listaProfessores.stream()
+            .filter(est -> est.getNome().contains(tfPesquisa.getText()))
+            .toList();
+
+            ProfessorListModel listModel = new ProfessorListModel(pesquisa);
+            tbPesquisa.setModel(listModel);
+        }else{
+            if (tipo == 2){
+                List<Aluno> pesquisa = listaAlunos.stream()
                 .filter(est -> est.getNome().contains(tfPesquisa.getText()))
                 .toList();
 
-                ProfessorListModel listModel = new ProfessorListModel(pesquisa);
+                AlunoListModel listModel = new AlunoListModel(pesquisa);
                 tbPesquisa.setModel(listModel);
             }else{
-                if (tipo == 2){
-                    List<Aluno> pesquisa = listaAlunos.stream()
-                    .filter(est -> est.getNome().contains(tfPesquisa.getText()))
+                if (tipo == 3){
+                    List<Notas> pesquisa = listaNotas.stream()
+                    .filter(est -> est.getAno()== Integer.valueOf(tfPesquisa.getText()))
                     .toList();
 
-                    AlunoListModel listModel = new AlunoListModel(pesquisa);
+                    NotasListModel listModel = new NotasListModel(pesquisa);
                     tbPesquisa.setModel(listModel);
-                }else{
-                    if (tipo == 3){
-                        List<Notas> pesquisa = listaNotas.stream()
-                        .filter(est -> est.getAno()== Integer.valueOf(tfPesquisa.getText()))
-                        .toList();
-
-                        NotasListModel listModel = new NotasListModel(pesquisa);
-                        tbPesquisa.setModel(listModel);
-                    }
                 }
-            }       
-        }
+            }
+        }       
+    }
+    
+    private void calcularMedia(){
+        int linhaSelecionada = tbPesquisa.getSelectedRow();  
+        Double media = ((double)tbPesquisa.getValueAt(linhaSelecionada, 2) + 
+                        (double)tbPesquisa.getValueAt(linhaSelecionada, 3) + 
+                        (double)tbPesquisa.getValueAt(linhaSelecionada, 4) +
+                        (double)tbPesquisa.getValueAt(linhaSelecionada, 5)) / 4;
+        JOptionPane.showMessageDialog(null, "A médiia do aluno é: " + String.valueOf(media), "Média do(a) aluno " + 
+                                      tbPesquisa.getValueAt(linhaSelecionada, 7), DO_NOTHING_ON_CLOSE);
+    }
 }

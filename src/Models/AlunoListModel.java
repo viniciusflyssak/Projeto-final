@@ -6,9 +6,9 @@ import javax.swing.table.AbstractTableModel;
 
 public class AlunoListModel extends AbstractTableModel {
 
-    private List<Aluno> listaAluno;
+    private final List<Aluno> listaAluno;
 
-    private String[] colunas = new String[]{"Código", "Nome", "CPF", "Gênero", "Data Nascimento", "Serie"};
+    private final String[] colunas = new String[]{"Código", "Nome", "CPF", "Gênero", "Data Nascimento", "Serie"};
 
     public AlunoListModel(List<Aluno> listaAluno) {
         this.listaAluno = listaAluno;
@@ -28,20 +28,26 @@ public class AlunoListModel extends AbstractTableModel {
     public Object getValueAt(int row, int column) {
         Aluno aluno = listaAluno.get(row);
         switch (column) {
-            case 0:
+            case 0 -> {
                 return aluno.getId();
-            case 1:
+            }
+            case 1 -> {
                 return aluno.getNome();
-            case 2:
+            }
+            case 2 -> {
                 return aluno.getCpf();
-            case 3:
+            }
+            case 3 -> {
                 return aluno.getGenero();
-            case 4:
+            }
+            case 4 -> {
                 return aluno.getDataNasc();
-            case 5:
+            }
+            case 5 -> {
                 return aluno.getSerie();
-            default:
-                break;
+            }
+            default -> {
+            }
         }
         return aluno;
     }

@@ -29,8 +29,8 @@ public class NotasDao extends AbstractDaoImpl<Notas> {
             pstm = getConn().prepareStatement(" INSERT INTO NOTAS(ANO, ID_ALUNO, ID_PROFESSOR, NOTA1, NOTA2, NOTA3, NOTA4) VALUES (?, ?, ?, ?, ?, ?, ?) ", 
                                               Statement.RETURN_GENERATED_KEYS);
             pstm.setInt(1, notas.getAno());
-            pstm.setInt(2, notas.getIdAluno());
-            pstm.setInt(3, notas.getIdProfessor());
+            pstm.setInt(2, notas.getAluno().getId());
+            pstm.setInt(3, notas.getProfessor().getId());
             pstm.setDouble(4, notas.getNota1());
             pstm.setDouble(5, notas.getNota2());
             pstm.setDouble(6, notas.getNota3());
@@ -113,8 +113,8 @@ public class NotasDao extends AbstractDaoImpl<Notas> {
                     + "WHERE ID_NOTAS=?");
 
             pstm.setInt(1, notas.getAno());
-            pstm.setInt(2, notas.getIdAluno());
-            pstm.setInt(3, notas.getIdProfessor());
+            pstm.setInt(2, notas.getAluno().getId());
+            pstm.setInt(3, notas.getProfessor().getId());
             pstm.setDouble(4, notas.getNota1());
             pstm.setDouble(5, notas.getNota2());
             pstm.setDouble(6, notas.getNota3());

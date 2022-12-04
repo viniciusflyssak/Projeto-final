@@ -11,6 +11,9 @@ public class Professor extends Pessoa{
         this.disciplina = disciplina;
     }    
     
+    public Professor() {        
+    } 
+    
     public String getDisciplina() {
         return disciplina;
     }

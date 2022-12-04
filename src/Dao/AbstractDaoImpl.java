@@ -19,6 +19,7 @@ public abstract class AbstractDaoImpl<T> implements AbstractDao<T> {
 
     protected Connection connection;
 
+    @Override
     public Connection getConn() {
         Conexao conexao = Conexao.getInstance();
         connection = conexao.getConexao();

@@ -19,6 +19,10 @@ public class Pessoa implements Serializable{
         this.cpf = cpf;
         this.dataNasc = dataNasc;
     }
+    
+    public Pessoa(){
+        
+    }
 
     public int getId() {
         return id;
