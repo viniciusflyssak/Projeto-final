@@ -7,6 +7,7 @@ import Models.ProfessorListModel;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 public class FrmProfessor extends javax.swing.JDialog {
     private final ProfessorListModel professorListModel;
@@ -271,17 +272,43 @@ public class FrmProfessor extends javax.swing.JDialog {
     }
     
     private void salvar(){
-        getProfessor();
-        ProfessorDao professorDao = new ProfessorDao();
-        if (this.id == 0) {
-            professorDao.insert(professor);
-            this.professorListModel.insertModel(professor);
-            dispose();
-        } else {
-            professor.setId(this.id);
-            professorDao.update(professor);
-            this.professorListModel.atualizarModel(linhaSelecionada, professor);
-            this.dispose();            
+        if (validarCampos()){
+            getProfessor();
+            ProfessorDao professorDao = new ProfessorDao();
+            if (this.id == 0) {
+                professorDao.insert(professor);
+                this.professorListModel.insertModel(professor);
+                dispose();
+            } else {
+                professor.setId(this.id);
+                professorDao.update(professor);
+                this.professorListModel.atualizarModel(linhaSelecionada, professor);
+                this.dispose();            
+            }
         }
+    }
+    
+    private boolean validarCampos(){
+        if ("".equals(tfCpf.getText())){
+            JOptionPane.showMessageDialog(null, "O CPF deve estar preenchido! ");
+            return false;
+        }
+        if ("".equals(tfDataNasc.getText())){
+            JOptionPane.showMessageDialog(null, "A data de nascimento deve estar preenchida! ");
+            return false;
+        }
+        if ("".equals(tfDisciplina.getText())){
+            JOptionPane.showMessageDialog(null, "A disciplina deve estar preenchido! ");
+            return false;
+        }
+        if ("".equals(tfEmail.getText())){
+            JOptionPane.showMessageDialog(null, "O email deve estar preenchido! ");
+            return false;
+        }
+        if ("".equals(tfNome.getText())){
+            JOptionPane.showMessageDialog(null, "O nome deve estar preenchido! ");
+            return false;
+        }        
+        return true;
     }
 }
