@@ -55,7 +55,6 @@ public class FrmProfessor extends javax.swing.JDialog {
         tfDisciplina = new javax.swing.JTextField();
         tfEmail = new javax.swing.JTextField();
         tfDataNasc = new javax.swing.JFormattedTextField();
-        btCadastrarNotas = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GestMais - Cadastro de aluno");
@@ -137,14 +136,6 @@ public class FrmProfessor extends javax.swing.JDialog {
         tfDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
         tfDataNasc.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
-        btCadastrarNotas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btCadastrarNotas.setText("Cadastrar Notas");
-        btCadastrarNotas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btCadastrarNotasActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,8 +150,6 @@ public class FrmProfessor extends javax.swing.JDialog {
                         .addGroup(layout.createSequentialGroup()
                             .addComponent(btCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btCadastrarNotas)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                             .addComponent(btSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -210,8 +199,7 @@ public class FrmProfessor extends javax.swing.JDialog {
                 .addGap(47, 47, 47)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btCancelar)
-                    .addComponent(btSalvar)
-                    .addComponent(btCadastrarNotas))
+                    .addComponent(btSalvar))
                 .addGap(0, 3, Short.MAX_VALUE))
         );
 
@@ -230,13 +218,8 @@ public class FrmProfessor extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_btCancelarActionPerformed
 
-    private void btCadastrarNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarNotasActionPerformed
-       
-    }//GEN-LAST:event_btCadastrarNotasActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btCadastrarNotas;
     private javax.swing.JButton btCancelar;
     private javax.swing.JButton btSalvar;
     private javax.swing.JComboBox<String> cbSexo;
