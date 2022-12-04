@@ -1,6 +1,7 @@
 package View;
 
 import java.beans.PropertyVetoException;
+import javax.swing.JOptionPane;
 
 public class FrmMenuPrincipal extends javax.swing.JFrame {
 
@@ -129,7 +130,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_miCadastroAlunoActionPerformed
 
     private void miSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSairActionPerformed
-        dispose();
+        int opcao = JOptionPane.showConfirmDialog(null,
+                    "Deseja realmente encerrar o programa? ",
+                    "Encerrar", JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+        if (opcao == JOptionPane.YES_OPTION) {
+            dispose();
+        }
     }//GEN-LAST:event_miSairActionPerformed
 
     private void miCadastroNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCadastroNotasActionPerformed
