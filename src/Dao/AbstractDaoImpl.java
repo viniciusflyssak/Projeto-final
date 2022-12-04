@@ -1,9 +1,19 @@
 package Dao;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
+import java.util.ArrayList;
+import java.util.List;
 
 public abstract class AbstractDaoImpl<T> implements AbstractDao<T> {
 
@@ -15,7 +25,7 @@ public abstract class AbstractDaoImpl<T> implements AbstractDao<T> {
         return connection;
     }
 
-    public void closePreparedStatement(PreparedStatement psmt) {
+    public void closePreparedStatement(PreparedStatement psmt)  {
         if (psmt == null) {
             return;
         }
@@ -24,6 +34,21 @@ public abstract class AbstractDaoImpl<T> implements AbstractDao<T> {
                 psmt.close();
             }
         } catch (SQLException ex) {
+            File arquivo = new File(System.getProperty("user.dir") + "/src/erros.txt");
+            if( !arquivo.exists()){
+             try {
+                 arquivo.createNewFile();
+             } catch (IOException ex1) {
+             }
+            }
+            List<String> lista = new ArrayList<>();
+            lista.add("Erro no closePreparedStatement:");
+            lista.add(ex.getMessage() + ", ocorrido neste hora: " + LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
+
+             try {
+                 Files.write(Paths.get(arquivo.getPath()), lista, StandardOpenOption.APPEND);
+             } catch (IOException ex1) {
+             }
         }
     }
 
@@ -36,6 +61,21 @@ public abstract class AbstractDaoImpl<T> implements AbstractDao<T> {
                 rs.close(); 
             }
         } catch (SQLException ex) {
+            File arquivo = new File(System.getProperty("user.dir") + "/src/erros.txt");
+            if( !arquivo.exists()){
+             try {
+                 arquivo.createNewFile();
+             } catch (IOException ex1) {
+             }
+            }
+            List<String> lista = new ArrayList<>();
+            lista.add("Erro no closeResultSet:");
+            lista.add(ex.getMessage() + ", ocorrido neste hora: " + LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
+
+             try {
+                 Files.write(Paths.get(arquivo.getPath()), lista, StandardOpenOption.APPEND);
+             } catch (IOException ex1) {
+             }
         }
     }
 }

@@ -1,22 +1,19 @@
 package View;
 
 import Dao.NotasDao;
-import Entidades.Genero;
 import Models.NotasListModel;
 import Entidades.Notas;
-import java.time.format.DateTimeFormatter;
-import javax.swing.DefaultComboBoxModel;
 import Entidades.Aluno;
 import Dao.AlunoDao;
 import Entidades.Professor;
 import Dao.ProfessorDao;
 
 public class FrmNotas extends javax.swing.JDialog {
-    private boolean editar;
-    private int id; 
+    private final boolean editar;
+    private final int id; 
     private Notas notas;
-    private int linhaSelecionada;
-    private NotasListModel notasListModel;
+    private final int linhaSelecionada;
+    private final NotasListModel notasListModel;
     
     public FrmNotas(boolean editar, int id,  NotasListModel notasListModel, int linhaSelecionada, Notas notas) {
         initComponents();

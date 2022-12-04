@@ -9,12 +9,12 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.DefaultComboBoxModel;
 
 public class FrmProfessor extends javax.swing.JDialog {
-    private boolean editar;
-    private ProfessorListModel professorListModel;
-    private int id;
-    private int linhaSelecionada;
+    private final boolean editar;
+    private final ProfessorListModel professorListModel;
+    private final int id;
+    private final int linhaSelecionada;
     private Professor professor;
-    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
     public FrmProfessor(boolean editar, int id,  ProfessorListModel  professorListModel, int linhaSelecionada, Professor professor) {
         initComponents();

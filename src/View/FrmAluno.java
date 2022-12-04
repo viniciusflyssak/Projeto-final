@@ -9,11 +9,11 @@ import Models.AlunoListModel;
 import javax.swing.DefaultComboBoxModel;
 
 public class FrmAluno extends javax.swing.JDialog {
-    private boolean editar;
-    private int id; 
-    private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private AlunoListModel alunoListModel;
-    private int linhaSelecionada;
+    private final boolean editar;
+    private final int id; 
+    private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private final AlunoListModel alunoListModel;
+    private final int linhaSelecionada;
     private Aluno aluno;
     
     public FrmAluno(boolean editar, int id, AlunoListModel alunoListModel, int linhaSelecionada, Aluno aluno) {

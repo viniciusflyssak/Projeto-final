@@ -2,6 +2,11 @@ package Dao;
 
 import Entidades.Aluno;
 import Entidades.Genero;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.sql.Date;
 import java.util.List;
 import java.sql.PreparedStatement;
@@ -10,7 +15,9 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 
 public class AlunoDao extends AbstractDaoImpl<Aluno> {
@@ -37,6 +44,7 @@ public class AlunoDao extends AbstractDaoImpl<Aluno> {
             }
             return null;
         } catch (SQLException ex) {
+            gravaLog(ex);
             JOptionPane.showMessageDialog(null, "Erro ao inserir aluno! " + ex.getMessage());
             return null;
         } finally {
@@ -53,6 +61,7 @@ public class AlunoDao extends AbstractDaoImpl<Aluno> {
             rs = pstm.executeQuery();
             return mountList();
         } catch (SQLException ex) {
+            gravaLog(ex);
             JOptionPane.showMessageDialog(null, "Erro ao buscar alunos! " + ex.getMessage());
             return null;
         } finally {
@@ -68,6 +77,7 @@ public class AlunoDao extends AbstractDaoImpl<Aluno> {
             pstm.setInt(1, id);
             return pstm.executeUpdate() > 0;
         } catch (SQLException ex) {
+            gravaLog(ex);
             JOptionPane.showMessageDialog(null, "Erro ao excluir o aluno! " + ex.getMessage());
             return false;
         } finally {
@@ -86,6 +96,7 @@ public class AlunoDao extends AbstractDaoImpl<Aluno> {
             }
             return null;
         } catch (SQLException ex) {
+            gravaLog(ex);
             JOptionPane.showMessageDialog(null, "Erro ao buscar aluno! " + ex.getMessage());
             return null;
         } finally {
@@ -113,6 +124,7 @@ public class AlunoDao extends AbstractDaoImpl<Aluno> {
             }
             return null;
         } catch (SQLException ex) {
+            gravaLog(ex);
             JOptionPane.showMessageDialog(null, "Erro ao atualizar aluno! " + ex.getMessage());
             return null;
         } finally {
@@ -145,13 +157,16 @@ public class AlunoDao extends AbstractDaoImpl<Aluno> {
                                     rs.getDate("DATA_NASCIMENTO").toLocalDate());
             return aluno;
         } catch (SQLException ex) {
+            gravaLog(ex);
             JOptionPane.showMessageDialog(null, "Erro ao criar aluno! " + ex.getMessage());
             return null;
         }
     }
 
+    @Override
     public List<Aluno> mountList() {
-        List<Aluno> listaAlunos = new ArrayList();
+        List<Aluno> listaAlunos;
+        listaAlunos = new ArrayList();
         try {
             while (rs.next()) {
                 Aluno aluno = mount(rs);
@@ -159,8 +174,27 @@ public class AlunoDao extends AbstractDaoImpl<Aluno> {
             }
 
         } catch (SQLException ex) {
+            gravaLog(ex);
             JOptionPane.showMessageDialog(null, "Erro! " + ex.getMessage());
         }
         return listaAlunos;
+    }
+    
+    private void gravaLog(SQLException ex){
+        File arquivo = new File(System.getProperty("user.dir") + "/src/erros.txt");
+        if( !arquivo.exists()){
+         try {
+             arquivo.createNewFile();
+         } catch (IOException ex1) {
+         }
+        }
+        List<String> lista = new ArrayList<>();
+        lista.add("Erro na AlunoDao:");
+        lista.add(ex.getMessage() + ", ocorrido neste hora: " + LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
+
+        try {
+            Files.write(Paths.get(arquivo.getPath()), lista, StandardOpenOption.APPEND);
+        } catch (IOException ex1) {
+        }
     }
 }

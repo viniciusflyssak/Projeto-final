@@ -2,6 +2,11 @@ package Dao;
 
 import Entidades.Genero;
 import Entidades.Professor;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.sql.Date;
 import java.util.List;
 import java.sql.PreparedStatement;
@@ -10,6 +15,9 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 
 
 public class ProfessorDao extends AbstractDaoImpl<Professor> {
@@ -36,6 +44,7 @@ public class ProfessorDao extends AbstractDaoImpl<Professor> {
             }
             return null;
         } catch (SQLException ex) {
+            gravaLog(ex);
             JOptionPane.showMessageDialog(null, "Erro ao inserir professor! " + ex.getMessage());
             return null;
         } finally {
@@ -52,6 +61,7 @@ public class ProfessorDao extends AbstractDaoImpl<Professor> {
             rs = pstm.executeQuery();
             return mountList();
         } catch (SQLException ex) {
+            gravaLog(ex);
             JOptionPane.showMessageDialog(null, "Erro ao buscar PROFESSOR! " + ex.getMessage());
             return null;
         } finally {
@@ -67,6 +77,7 @@ public class ProfessorDao extends AbstractDaoImpl<Professor> {
             pstm.setInt(1, id);
             return pstm.executeUpdate() > 0;
         } catch (SQLException ex) {
+            gravaLog(ex);
             JOptionPane.showMessageDialog(null, "Erro ao excluir o professor! " + ex.getMessage());
             return false;
         } finally {
@@ -85,6 +96,7 @@ public class ProfessorDao extends AbstractDaoImpl<Professor> {
             }
             return null;
         } catch (SQLException ex) {
+            gravaLog(ex);
             JOptionPane.showMessageDialog(null, "Erro ao buscar professor! " + ex.getMessage());
             return null;
         } finally {
@@ -112,6 +124,7 @@ public class ProfessorDao extends AbstractDaoImpl<Professor> {
             }
             return null;
         } catch (SQLException ex) {
+            gravaLog(ex);
             JOptionPane.showMessageDialog(null, "Erro ao atualizar professor! " + ex.getMessage());
             return null;
         } finally {
@@ -143,6 +156,7 @@ public class ProfessorDao extends AbstractDaoImpl<Professor> {
                                                 rs.getDate("DATA_NASCIMENTO").toLocalDate());
             return professor;
         } catch (SQLException ex) {
+            gravaLog(ex);
             JOptionPane.showMessageDialog(null, "Erro ao criar professor! " + ex.getMessage());
             return null;
         }
@@ -158,9 +172,28 @@ public class ProfessorDao extends AbstractDaoImpl<Professor> {
             }
 
         } catch (SQLException ex) {
+            gravaLog(ex);
             JOptionPane.showMessageDialog(null, "Erro! " + ex.getMessage());
         }
         return listaAlunos;
+    }
+    
+    private void gravaLog(SQLException ex){
+        File arquivo = new File(System.getProperty("user.dir") + "/src/erros.txt");
+        if( !arquivo.exists()){
+         try {
+             arquivo.createNewFile();
+         } catch (IOException ex1) {
+         }
+        }
+        List<String> lista = new ArrayList<>();
+        lista.add("Erro na ProfessorDao:");
+        lista.add(ex.getMessage() + ", ocorrido neste hora: " + LocalDateTime.now().format(DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)));
+
+        try {
+            Files.write(Paths.get(arquivo.getPath()), lista, StandardOpenOption.APPEND);
+        } catch (IOException ex1) {
+        }
     }
 
 }
