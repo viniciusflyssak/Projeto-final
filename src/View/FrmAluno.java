@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import Dao.AlunoDao;
 import Models.AlunoListModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 
 public class FrmAluno extends javax.swing.JDialog {
     private final int id; 
@@ -261,17 +262,43 @@ public class FrmAluno extends javax.swing.JDialog {
     }
     
     private void salvar(){
-        getAluno();
-        AlunoDao alunoDao = new AlunoDao();
-        if (this.id == 0) {
-            alunoDao.insert(aluno);
-            this.alunoListModel.insertModel(aluno);
-            dispose();
-        } else {
-            this.aluno.setId(this.id);
-            alunoDao.update(aluno);
-            this.alunoListModel.atualizarModel(linhaSelecionada, aluno);
-            dispose();            
+        if (validarCampos()){
+            getAluno();
+            AlunoDao alunoDao = new AlunoDao();
+            if (this.id == 0) {
+                alunoDao.insert(aluno);
+                this.alunoListModel.insertModel(aluno);
+                dispose();
+            } else {
+                this.aluno.setId(this.id);
+                alunoDao.update(aluno);
+                this.alunoListModel.atualizarModel(linhaSelecionada, aluno);
+                dispose();            
+            }
         }
+    }
+    
+    private boolean validarCampos(){
+        if ("".equals(tfNome.getText())){
+            JOptionPane.showMessageDialog(null, "O nome deve estar preenchido! ");
+            return false;
+        }  
+        if ("".equals(tfCpf.getText())){
+            JOptionPane.showMessageDialog(null, "O CPF deve estar preenchido! ");
+            return false;
+        }
+        if ("".equals(tfDataNasc.getText())){
+            JOptionPane.showMessageDialog(null, "A data de nascimento deve estar preenchida! ");
+            return false;
+        }
+        if ("".equals(tfEmail.getText())){
+            JOptionPane.showMessageDialog(null, "O email deve estar preenchido! ");
+            return false;
+        }      
+        if ("".equals(tfSerie.getText())){
+            JOptionPane.showMessageDialog(null, "A serie deve estar preenchida! ");
+            return false;
+        }
+        return true;
     }
 }

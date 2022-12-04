@@ -289,6 +289,10 @@ public class FrmProfessor extends javax.swing.JDialog {
     }
     
     private boolean validarCampos(){
+        if ("".equals(tfNome.getText())){
+            JOptionPane.showMessageDialog(null, "O nome deve estar preenchido! ");
+            return false;
+        }            
         if ("".equals(tfCpf.getText())){
             JOptionPane.showMessageDialog(null, "O CPF deve estar preenchido! ");
             return false;
@@ -297,16 +301,12 @@ public class FrmProfessor extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "A data de nascimento deve estar preenchida! ");
             return false;
         }
-        if ("".equals(tfDisciplina.getText())){
-            JOptionPane.showMessageDialog(null, "A disciplina deve estar preenchido! ");
-            return false;
-        }
         if ("".equals(tfEmail.getText())){
             JOptionPane.showMessageDialog(null, "O email deve estar preenchido! ");
             return false;
-        }
-        if ("".equals(tfNome.getText())){
-            JOptionPane.showMessageDialog(null, "O nome deve estar preenchido! ");
+        }    
+        if ("".equals(tfDisciplina.getText())){
+            JOptionPane.showMessageDialog(null, "A disciplina deve estar preenchido! ");
             return false;
         }        
         return true;
