@@ -20,6 +20,8 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
     private List<Aluno> listaAlunos;
     private NotasListModel notasListModel;
     private List<Notas> listaNotas;
+    private int linhaSelecionada;
+    
     public FrmPesquisa(int tipo) {
         initComponents();
         this.tipo =  tipo;
@@ -178,21 +180,26 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btVoltarActionPerformed
 
     private void btEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btEditarActionPerformed
-        if (tipo == 1){
-            editarProfessor();
-        }else{
-            if (tipo == 2){
-                editarAluno();
+        linhaSelecionada = tbPesquisa.getSelectedRow();
+        if (linhaSelecionada >= 0) {
+            if (tipo == 1){
+                editarProfessor();
             }else{
-                if (tipo == 3){
-                    editarNotas();
+                if (tipo == 2){
+                    editarAluno();
+                }else{
+                    if (tipo == 3){
+                        editarNotas();
+                    }
                 }
-            }
-        } 
-        pesquisar();
+            } 
+        }else{
+            JOptionPane.showMessageDialog(null, "Selecione ao menos um registro!", "Erro", EXIT_ON_CLOSE);
+        }
     }//GEN-LAST:event_btEditarActionPerformed
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
+        linhaSelecionada = tbPesquisa.getSelectedRow();  
         if (tipo == 1){
             novoProfessor();
         }else{
@@ -204,11 +211,10 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
                 }
             }
         }       
-        pesquisar();
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
-        int linhaSelecionada = tbPesquisa.getSelectedRow();  
+        linhaSelecionada = tbPesquisa.getSelectedRow();  
         if (linhaSelecionada >= 0) {
             int opcao = JOptionPane.showConfirmDialog(null,
                     "Deseja excluir o registro selecionado? ",
@@ -230,6 +236,8 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
                     }
                 }         
             }
+        }else{
+            JOptionPane.showMessageDialog(null, "Selecione ao menos um registro!", "Erro", EXIT_ON_CLOSE);
         }
     }//GEN-LAST:event_btExcluirActionPerformed
 
@@ -254,52 +262,40 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
     
     private void editarProfessor(){
-        int linhaSelecionada = tbPesquisa.getSelectedRow();
-        if (linhaSelecionada >= 0) {
-            int id = (int) tbPesquisa.getValueAt(linhaSelecionada, 0);
-            ProfessorDao professorDao = new ProfessorDao();
-            Professor professor = professorDao.findById(id);
-            FrmProfessor frmProfessor = new FrmProfessor(id, professorListModel, linhaSelecionada, professor);
-            frmProfessor.setVisible(true);
-        }    
+        int id = (int) tbPesquisa.getValueAt(linhaSelecionada, 0);
+        ProfessorDao professorDao = new ProfessorDao();
+        Professor professor = professorDao.findById(id);
+        FrmProfessor frmProfessor = new FrmProfessor(id, professorListModel, linhaSelecionada, professor);
+        frmProfessor.setVisible(true);   
     }
     
     private void editarAluno(){
-        int linhaSelecionada = tbPesquisa.getSelectedRow();
-        if (linhaSelecionada >= 0) {
-            int id = (int) tbPesquisa.getValueAt(linhaSelecionada, 0);
-            AlunoDao alunoDao = new AlunoDao();
-            Aluno aluno = alunoDao.findById(id);            
-            FrmAluno frmAluno = new FrmAluno(id, alunoListModel, linhaSelecionada, aluno);   
-            frmAluno.setVisible(true);
-        }           
+        int id = (int) tbPesquisa.getValueAt(linhaSelecionada, 0);
+        AlunoDao alunoDao = new AlunoDao();
+        Aluno aluno = alunoDao.findById(id);            
+        FrmAluno frmAluno = new FrmAluno(id, alunoListModel, linhaSelecionada, aluno);   
+        frmAluno.setVisible(true);       
     }
     
     private void editarNotas(){
-        int linhaSelecionada = tbPesquisa.getSelectedRow();
-        if (linhaSelecionada >= 0) {
-            int id = (int) tbPesquisa.getValueAt(linhaSelecionada, 0);
-            NotasDao notasDao = new NotasDao();
-            Notas notas = notasDao.findById(id);            
-            FrmNotas frmNotas = new FrmNotas(id, notasListModel, linhaSelecionada, notas);  
-            frmNotas.setVisible(true);
-        }    
+        int id = (int) tbPesquisa.getValueAt(linhaSelecionada, 0);
+        NotasDao notasDao = new NotasDao();
+        Notas notas = notasDao.findById(id);            
+        FrmNotas frmNotas = new FrmNotas(id, notasListModel, linhaSelecionada, notas);  
+        frmNotas.setVisible(true);
     }
     
-    private void novoAluno(){
-        int linhaSelecionada = tbPesquisa.getSelectedRow();           
+    private void novoAluno(){       
         FrmAluno frmAluno = new FrmAluno(0, alunoListModel, linhaSelecionada, null);
         frmAluno.setVisible(true);                
     }
     
-    private void novasNotas(){        
-        int linhaSelecionada = tbPesquisa.getSelectedRow();           
+    private void novasNotas(){               
         FrmNotas frmNotas = new FrmNotas(0, notasListModel, linhaSelecionada, null);
         frmNotas.setVisible(true);          
     }
     
-    private void novoProfessor(){
-        int linhaSelecionada = tbPesquisa.getSelectedRow();           
+    private void novoProfessor(){          
         FrmProfessor frmProfessor = new FrmProfessor(0, professorListModel, linhaSelecionada, null);
         frmProfessor.setVisible(true);           
     }
@@ -352,7 +348,7 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
     }
     
     private void calcularMedia(){
-        int linhaSelecionada = tbPesquisa.getSelectedRow();  
+        linhaSelecionada = tbPesquisa.getSelectedRow();  
         Double media = ((double)tbPesquisa.getValueAt(linhaSelecionada, 2) + 
                         (double)tbPesquisa.getValueAt(linhaSelecionada, 3) + 
                         (double)tbPesquisa.getValueAt(linhaSelecionada, 4) +
