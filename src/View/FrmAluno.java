@@ -8,7 +8,7 @@ import Dao.AlunoDao;
 import Models.AlunoListModel;
 import javax.swing.DefaultComboBoxModel;
 
-public class FrmAluno extends javax.swing.JFrame {
+public class FrmAluno extends javax.swing.JDialog {
     private boolean editar;
     private int id; 
     private DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");

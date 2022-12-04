@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.DefaultComboBoxModel;
 
-public class FrmProfessor extends javax.swing.JFrame {
+public class FrmProfessor extends javax.swing.JDialog {
     private boolean editar;
     private ProfessorListModel professorListModel;
     private int id;
@@ -60,7 +60,7 @@ public class FrmProfessor extends javax.swing.JFrame {
         tfDataNasc = new javax.swing.JFormattedTextField();
         btCadastrarNotas = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GestMais - Cadastro de aluno");
 
         pnTitulo.setBackground(new java.awt.Color(51, 51, 51));
@@ -142,6 +142,11 @@ public class FrmProfessor extends javax.swing.JFrame {
 
         btCadastrarNotas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btCadastrarNotas.setText("Cadastrar Notas");
+        btCadastrarNotas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCadastrarNotasActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -227,6 +232,10 @@ public class FrmProfessor extends javax.swing.JFrame {
     private void btCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelarActionPerformed
         dispose();
     }//GEN-LAST:event_btCancelarActionPerformed
+
+    private void btCadastrarNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCadastrarNotasActionPerformed
+       
+    }//GEN-LAST:event_btCadastrarNotasActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

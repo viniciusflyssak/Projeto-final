@@ -6,8 +6,12 @@ import Models.NotasListModel;
 import Entidades.Notas;
 import java.time.format.DateTimeFormatter;
 import javax.swing.DefaultComboBoxModel;
+import Entidades.Aluno;
+import Dao.AlunoDao;
+import Entidades.Professor;
+import Dao.ProfessorDao;
 
-public class FrmNotas extends javax.swing.JFrame {
+public class FrmNotas extends javax.swing.JDialog {
     private boolean editar;
     private int id; 
     private Notas notas;
@@ -26,6 +30,14 @@ public class FrmNotas extends javax.swing.JFrame {
             this.id = 0;
         }
         if (editar){
+            AlunoDao alunoDao = new AlunoDao();
+            Aluno aluno = alunoDao.findById(this.notas.getIdAluno());
+            ProfessorDao professorDao = new ProfessorDao();
+            Professor professor = professorDao.findById(this.notas.getIdProfessor());
+            tfNomeAluno.setText(aluno.getNome());
+            tfNomeProfessor.setText(professor.getNome());
+            tfIdAluno.setText(String.valueOf(this.notas.getIdAluno()));
+            tfIdProfessor.setText(String.valueOf(this.notas.getIdProfessor()));
             tfAno.setText(String.valueOf(this.notas.getAno()));
             tfNota1.setText(String.valueOf(this.notas.getNota1()));
             tfNota2.setText(String.valueOf(this.notas.getNota2()));
@@ -33,6 +45,7 @@ public class FrmNotas extends javax.swing.JFrame {
             tfNota4.setText(String.valueOf(this.notas.getNota4()));
         }
     }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -90,7 +103,7 @@ public class FrmNotas extends javax.swing.JFrame {
         btSalvar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btSalvar.setText("Salvar");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("GestMais - Cadastro de Notas");
 
         pnTitulo.setBackground(new java.awt.Color(51, 51, 51));
@@ -133,9 +146,19 @@ public class FrmNotas extends javax.swing.JFrame {
 
         btCancelar1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btCancelar1.setText("Cancelar");
+        btCancelar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btCancelar1ActionPerformed(evt);
+            }
+        });
 
         btSalvar1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btSalvar1.setText("Salvar");
+        btSalvar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btSalvar1ActionPerformed(evt);
+            }
+        });
 
         tfIdAluno.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
@@ -168,44 +191,43 @@ public class FrmNotas extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbAno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfAno, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(363, 363, 363))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lbNota1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfNota1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lbNota2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfNota2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lbNota3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfNota3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lbNota4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tfNota4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lbAluno)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(tfIdAluno))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(lbNota1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(tfNota1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(lbProfessor, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addComponent(lbAluno, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(lbProfessor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(tfIdProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addComponent(lbNota2)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(tfNota2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(lbNota3)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(tfNota3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(lbNota4)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(tfNota4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addComponent(tfNomeProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(0, 0, Short.MAX_VALUE))
-                                    .addComponent(tfNomeAluno)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lbAno)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(tfAno, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(399, 399, 399))))
+                                        .addComponent(tfNomeProfessor, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(tfIdAluno, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(tfNomeAluno)))))
+                        .addGap(0, 19, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btCancelar1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -250,6 +272,14 @@ public class FrmNotas extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCancelar1ActionPerformed
+        dispose();
+    }//GEN-LAST:event_btCancelar1ActionPerformed
+
+    private void btSalvar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btSalvar1ActionPerformed
+        salvar();
+    }//GEN-LAST:event_btSalvar1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

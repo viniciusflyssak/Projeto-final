@@ -19,9 +19,9 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         mnCadastros = new javax.swing.JMenu();
         miCadProf = new javax.swing.JMenuItem();
         miCadastroAluno = new javax.swing.JMenuItem();
-        jSeparator1 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        mnSobre = new javax.swing.JMenu();
+        miCadastroNotas = new javax.swing.JMenuItem();
+        spSair = new javax.swing.JPopupMenu.Separator();
+        miSair = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("GestMais - Gestão de professores e alunos");
@@ -82,21 +82,27 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
             }
         });
         mnCadastros.add(miCadastroAluno);
-        mnCadastros.add(jSeparator1);
 
-        jMenuItem1.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.CTRL_DOWN_MASK));
-        jMenuItem1.setText("Sair");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        miCadastroNotas.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_N, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miCadastroNotas.setText("Cadastro de notas");
+        miCadastroNotas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                miCadastroNotasActionPerformed(evt);
             }
         });
-        mnCadastros.add(jMenuItem1);
+        mnCadastros.add(miCadastroNotas);
+        mnCadastros.add(spSair);
+
+        miSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.CTRL_DOWN_MASK));
+        miSair.setText("Sair");
+        miSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miSairActionPerformed(evt);
+            }
+        });
+        mnCadastros.add(miSair);
 
         mbPrincipal.add(mnCadastros);
-
-        mnSobre.setText("Sobre");
-        mbPrincipal.add(mnSobre);
 
         setJMenuBar(mbPrincipal);
 
@@ -122,9 +128,13 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         chamarCadastroAluno();
     }//GEN-LAST:event_miCadastroAlunoActionPerformed
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void miSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miSairActionPerformed
         dispose();
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
+    }//GEN-LAST:event_miSairActionPerformed
+
+    private void miCadastroNotasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miCadastroNotasActionPerformed
+        chamarCadastroNotas();
+    }//GEN-LAST:event_miCadastroNotasActionPerformed
 
     public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -136,34 +146,45 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane dpDesktop;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
     private java.awt.Label lbTitulo;
     private javax.swing.JMenuBar mbPrincipal;
     private javax.swing.JMenuItem miCadProf;
     private javax.swing.JMenuItem miCadastroAluno;
+    private javax.swing.JMenuItem miCadastroNotas;
+    private javax.swing.JMenuItem miSair;
     private javax.swing.JMenu mnCadastros;
-    private javax.swing.JMenu mnSobre;
     private javax.swing.JPanel pnTitulo;
+    private javax.swing.JPopupMenu.Separator spSair;
     // End of variables declaration//GEN-END:variables
     
     private void chamarCadastroProfessor(){
-        FrmPesquisa frmPesquisaCliente = new FrmPesquisa(1);        
-        dpDesktop.add(frmPesquisaCliente);
-        frmPesquisaCliente.setVisible(true);
+        FrmPesquisa frmPesquisaProfessor = new FrmPesquisa(1);        
+        dpDesktop.add(frmPesquisaProfessor);
+        frmPesquisaProfessor.setVisible(true);
         try {
-            frmPesquisaCliente.setMaximum(true);
+            frmPesquisaProfessor.setMaximum(true);
         }catch (PropertyVetoException ex){
             ex.printStackTrace();                    
         }
     }
     
     private void chamarCadastroAluno(){
-        FrmPesquisa frmPesquisaCliente = new FrmPesquisa(2);        
-        dpDesktop.add(frmPesquisaCliente);
-        frmPesquisaCliente.setVisible(true);
+        FrmPesquisa frmPesquisaAluno = new FrmPesquisa(2);        
+        dpDesktop.add(frmPesquisaAluno);
+        frmPesquisaAluno.setVisible(true);
         try {
-            frmPesquisaCliente.setMaximum(true);
+            frmPesquisaAluno.setMaximum(true);
+        }catch (PropertyVetoException ex){
+            ex.printStackTrace();                    
+        }
+    }
+    
+    private void chamarCadastroNotas(){
+        FrmPesquisa frmPesquisaNotas = new FrmPesquisa(3);        
+        dpDesktop.add(frmPesquisaNotas);
+        frmPesquisaNotas.setVisible(true);
+        try {
+            frmPesquisaNotas.setMaximum(true);
         }catch (PropertyVetoException ex){
             ex.printStackTrace();                    
         }

@@ -59,7 +59,6 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
         btVoltar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Pesquisa");
 
         tbPesquisa.setModel(new javax.swing.table.DefaultTableModel(

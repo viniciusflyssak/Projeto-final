@@ -8,7 +8,8 @@ public class NotasListModel extends AbstractTableModel {
 
     private List<Notas> listaNotas;
 
-    private String[] colunas = new String[]{"Código", "Ano", "Nota 1", "Nota 2", "Nota 3", "Nota 4"};
+    private String[] colunas = new String[]{"Código", "Ano", "Nota 1", "Nota 2", "Nota 3", "Nota 4", "Código aluno",
+            "Nome aluno", "Código professor", "Nome professor"};
 
     public NotasListModel(List<Notas> listaNotas) {
         this.listaNotas = listaNotas;
@@ -40,6 +41,10 @@ public class NotasListModel extends AbstractTableModel {
                 return notas.getNota3();
             case 5:
                 return notas.getNota4();
+            case 6:
+                return notas.getIdAluno();
+            case 9:
+                return notas.getIdProfessor();            
             default:
                 break;
         }
