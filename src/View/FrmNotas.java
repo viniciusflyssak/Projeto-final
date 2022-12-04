@@ -17,6 +17,9 @@ public class FrmNotas extends javax.swing.JDialog {
         this.tfNomeAluno.setEditable(false);
         this.tfNomeProfessor.setEditable(false);
         this.notas = notas;
+        if (this.notas == null) {
+            this.notas = new Notas();
+        }
         this.notasListModel = notasListModel;
         this.linhaSelecionada = linhaSelecionada;
         if (id > 0){
@@ -317,21 +320,14 @@ public class FrmNotas extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     private void getNotas() {
-        if (this.notas == null) {
-            this.notas = new Notas(this.id, Double.valueOf(tfNota1.getText()),
-                                   Double.valueOf(tfNota2.getText()), Double.valueOf(tfNota3.getText()),
-                                   Double.valueOf(tfNota4.getText()), Integer.valueOf(tfAno.getText()),
-                                   Integer.valueOf(tfIdAluno.getText()), Integer.valueOf(tfIdProfessor.getText()));
-        }else{
-            this.notas.setAno(Integer.valueOf(tfAno.getText()));
-            this.notas.setId(this.id);
-            this.notas.getAluno().setId(Integer.valueOf(tfIdAluno.getText()));
-            this.notas.getProfessor().setId(Integer.valueOf(tfIdProfessor.getText()));
-            this.notas.setNota1(Double.valueOf(tfNota1.getText()));
-            this.notas.setNota2(Double.valueOf(tfNota2.getText()));
-            this.notas.setNota3(Double.valueOf(tfNota3.getText()));
-            this.notas.setNota4(Double.valueOf(tfNota4.getText()));
-        }
+        this.notas.setAno(Integer.valueOf(tfAno.getText()));
+        this.notas.setId(this.id);
+        this.notas.getAluno().setId(Integer.valueOf(tfIdAluno.getText()));
+        this.notas.getProfessor().setId(Integer.valueOf(tfIdProfessor.getText()));
+        this.notas.setNota1(Double.valueOf(tfNota1.getText()));
+        this.notas.setNota2(Double.valueOf(tfNota2.getText()));
+        this.notas.setNota3(Double.valueOf(tfNota3.getText()));
+        this.notas.setNota4(Double.valueOf(tfNota4.getText()));
     }
     
     private void salvar(){

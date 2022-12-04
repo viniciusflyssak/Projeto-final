@@ -133,7 +133,7 @@ public class FrmProfessor extends javax.swing.JDialog {
             }
         });
 
-        tfDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(new java.text.SimpleDateFormat("dd/MM/YYYY"))));
+        tfDataNasc.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.DateFormatter(java.text.DateFormat.getDateInstance(java.text.DateFormat.SHORT))));
         tfDataNasc.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
 
         btCadastrarNotas.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N

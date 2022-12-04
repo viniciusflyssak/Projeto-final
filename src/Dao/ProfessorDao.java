@@ -73,6 +73,10 @@ public class ProfessorDao extends AbstractDaoImpl<Professor> {
     @Override
     public boolean delete(int id) {
         try {
+            pstm = getConn().prepareStatement("DELETE FROM NOTAS WHERE ID_PROFESSOR = ?");
+            pstm.setInt(1, id);
+            pstm.executeUpdate();
+            super.closePreparedStatement(pstm);
             pstm = getConn().prepareStatement("DELETE FROM PROFESSORES WHERE ID_PROFESSOR = ?");
             pstm.setInt(1, id);
             return pstm.executeUpdate() > 0;

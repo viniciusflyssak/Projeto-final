@@ -73,6 +73,10 @@ public class AlunoDao extends AbstractDaoImpl<Aluno> {
     @Override
     public boolean delete(int id) {
         try {
+            pstm = getConn().prepareStatement("DELETE FROM NOTAS WHERE ID_ALUNO = ?");
+            pstm.setInt(1, id);
+            pstm.executeUpdate();
+            super.closePreparedStatement(pstm);
             pstm = getConn().prepareStatement("DELETE FROM ALUNOS WHERE ID_ALUNO = ?");
             pstm.setInt(1, id);
             return pstm.executeUpdate() > 0;

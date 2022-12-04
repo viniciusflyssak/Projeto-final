@@ -29,6 +29,10 @@ public final class Notas {
         buscaAluno();
         buscaProfessor();
     }
+    
+    public Notas(){
+        
+    }
 
     public int getId() {
         return id;
