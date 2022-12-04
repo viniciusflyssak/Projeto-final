@@ -58,6 +58,8 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
         btEditar = new javax.swing.JButton();
         btVoltar = new javax.swing.JButton();
         btExcluir = new javax.swing.JButton();
+        tfPesquisa = new javax.swing.JTextField();
+        btPesquisar = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -107,26 +109,45 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
             }
         });
 
+        btPesquisar.setText("Pesquisar");
+        btPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btPesquisarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(spPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 593, Short.MAX_VALUE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addComponent(spPesquisa)
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(8, 8, 8))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(tfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btPesquisar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btVoltar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(8, 8, 8))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(spPesquisa, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(tfPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btPesquisar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(spPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btNovo)
@@ -155,6 +176,7 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
                 }
             }
         } 
+        pesquisar();
     }//GEN-LAST:event_btEditarActionPerformed
 
     private void btNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btNovoActionPerformed
@@ -168,7 +190,8 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
                     novasNotas();
                 }
             }
-        }         
+        }       
+        pesquisar();
     }//GEN-LAST:event_btNovoActionPerformed
 
     private void btExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExcluirActionPerformed
@@ -197,13 +220,19 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btExcluirActionPerformed
 
+    private void btPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btPesquisarActionPerformed
+        pesquisar();
+    }//GEN-LAST:event_btPesquisarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btEditar;
     private javax.swing.JButton btExcluir;
     private javax.swing.JButton btNovo;
+    private javax.swing.JButton btPesquisar;
     private javax.swing.JButton btVoltar;
     private javax.swing.JScrollPane spPesquisa;
     private javax.swing.JTable tbPesquisa;
+    private javax.swing.JTextField tfPesquisa;
     // End of variables declaration//GEN-END:variables
     
     private void editarProfessor(){
@@ -234,7 +263,7 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
             int id = (int) tbPesquisa.getValueAt(linhaSelecionada, 0);
             NotasDao notasDao = new NotasDao();
             Notas notas = notasDao.findById(id);            
-            FrmNotas frmNotas = new FrmNotas(true, id, notasListModel, linhaSelecionada, notas);   
+            FrmNotas frmNotas = new FrmNotas(true, id, notasListModel, linhaSelecionada, notas);  
             frmNotas.setVisible(true);
         }    
     }
@@ -245,7 +274,7 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
         AlunoDao alunoDao = new AlunoDao();
         Aluno aluno = alunoDao.findById(id);
         FrmAluno frmAluno = new FrmAluno(false, id, alunoListModel, linhaSelecionada, null);
-        frmAluno.setVisible(true);        
+        frmAluno.setVisible(true);                
     }
     
     private void novasNotas(){        
@@ -254,7 +283,7 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
         NotasDao notasDao = new NotasDao();
         Notas notas = notasDao.findById(id);
         FrmNotas frmNotas = new FrmNotas(false, id, notasListModel, linhaSelecionada, null);
-        frmNotas.setVisible(true);    
+        frmNotas.setVisible(true);          
     }
     
     private void novoProfessor(){
@@ -263,7 +292,7 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
         ProfessorDao professorDao = new ProfessorDao();
         Professor professor = professorDao.findById(id);
         FrmProfessor frmProfessor = new FrmProfessor(false, id, professorListModel, linhaSelecionada, null);
-        frmProfessor.setVisible(true);   
+        frmProfessor.setVisible(true);           
     }
     
     private void excluirProfessor(){
@@ -281,6 +310,35 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
     private void excluirNotas(){
         int id = (int) tbPesquisa.getValueAt(tbPesquisa.getSelectedRow(), 0);
         NotasDao notasDao = new NotasDao();
-        notasDao.delete(id); 
+        notasDao.delete(id);         
     }
+    
+    private void pesquisar(){        
+        if (tipo == 1){            
+                List<Professor> pesquisa = listaProfessores.stream()
+                .filter(est -> est.getNome().contains(tfPesquisa.getText()))
+                .toList();
+
+                ProfessorListModel listModel = new ProfessorListModel(pesquisa);
+                tbPesquisa.setModel(listModel);
+            }else{
+                if (tipo == 2){
+                    List<Aluno> pesquisa = listaAlunos.stream()
+                    .filter(est -> est.getNome().contains(tfPesquisa.getText()))
+                    .toList();
+
+                    AlunoListModel listModel = new AlunoListModel(pesquisa);
+                    tbPesquisa.setModel(listModel);
+                }else{
+                    if (tipo == 3){
+                        List<Notas> pesquisa = listaNotas.stream()
+                        .filter(est -> est.getAno()== Integer.valueOf(tfPesquisa.getText()))
+                        .toList();
+
+                        NotasListModel listModel = new NotasListModel(pesquisa);
+                        tbPesquisa.setModel(listModel);
+                    }
+                }
+            }       
+        }
 }
