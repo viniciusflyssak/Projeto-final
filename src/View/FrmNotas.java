@@ -5,6 +5,7 @@ import Entidades.Aluno;
 import Models.NotasListModel;
 import Entidades.Notas;
 import Entidades.Professor;
+import javax.swing.JOptionPane;
 
 public class FrmNotas extends javax.swing.JDialog {
     private final int id; 
@@ -284,11 +285,19 @@ public class FrmNotas extends javax.swing.JDialog {
     }//GEN-LAST:event_btSalvar1ActionPerformed
 
     private void tfIdProfessorFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfIdProfessorFocusLost
-       buscaProfessor();
+        if (!"".equals(tfIdProfessor.getText())){
+            buscaProfessor();
+        }else{
+            tfNomeProfessor.setText("");
+        }
     }//GEN-LAST:event_tfIdProfessorFocusLost
 
     private void tfIdAlunoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_tfIdAlunoFocusLost
-       buscaAluno();
+        if (!"".equals(tfIdAluno.getText())){
+            buscaAluno();
+        }else{
+            tfNomeAluno.setText("");
+        }
     }//GEN-LAST:event_tfIdAlunoFocusLost
 
 
@@ -331,17 +340,19 @@ public class FrmNotas extends javax.swing.JDialog {
     }
     
     private void salvar(){
-        getNotas();
-        NotasDao notasDao = new NotasDao();
-        if (this.id == 0) {
-            notasDao.insert(notas);
-            this.notasListModel.insertModel(notas);
-            dispose();
-        } else {
-            this.notas.setId(this.id);
-            notasDao.update(notas);
-            this.notasListModel.atualizarModel(linhaSelecionada, notas);
-            dispose();            
+        if (validarCampos()){
+            getNotas();
+            NotasDao notasDao = new NotasDao();
+            if (this.id == 0) {
+                notasDao.insert(notas);
+                this.notasListModel.insertModel(notas);
+                dispose();
+            } else {
+                this.notas.setId(this.id);
+                notasDao.update(notas);
+                this.notasListModel.atualizarModel(linhaSelecionada, notas);
+                dispose();            
+            }
         }
     }
     
@@ -371,5 +382,33 @@ public class FrmNotas extends javax.swing.JDialog {
             tfNomeProfessor.setText("Professor não encontrado!");
             tfIdProfessor.setText("");
         }
+    }
+    
+    private boolean validarCampos(){
+        if ("".equals(tfAno.getText())){
+            JOptionPane.showMessageDialog(null, "O ano deve estar preenchido! ");
+            return false;
+        }
+        if ("".equals(tfIdAluno.getText())){
+            JOptionPane.showMessageDialog(null, "O aluno deve estar preenchido! ");
+            return false;
+        }
+        if ("".equals(tfIdProfessor.getText())){
+            JOptionPane.showMessageDialog(null, "O professor deve estar preenchido! ");
+            return false;
+        }
+        if ("".equals(tfNota1.getText())){
+            tfNota1.setText("0");
+        }
+        if ("".equals(tfNota2.getText())){
+            tfNota2.setText("0");
+        }
+        if ("".equals(tfNota3.getText())){
+            tfNota3.setText("0");
+        }
+        if ("".equals(tfNota4.getText())){
+            tfNota4.setText("0");
+        }
+        return true;
     }
 }
