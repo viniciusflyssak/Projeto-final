@@ -259,7 +259,7 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
             int id = (int) tbPesquisa.getValueAt(linhaSelecionada, 0);
             ProfessorDao professorDao = new ProfessorDao();
             Professor professor = professorDao.findById(id);
-            FrmProfessor frmProfessor = new FrmProfessor(true, id, professorListModel, linhaSelecionada, professor);
+            FrmProfessor frmProfessor = new FrmProfessor(id, professorListModel, linhaSelecionada, professor);
             frmProfessor.setVisible(true);
         }    
     }
@@ -270,7 +270,7 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
             int id = (int) tbPesquisa.getValueAt(linhaSelecionada, 0);
             AlunoDao alunoDao = new AlunoDao();
             Aluno aluno = alunoDao.findById(id);            
-            FrmAluno frmAluno = new FrmAluno(true, id, alunoListModel, linhaSelecionada, aluno);   
+            FrmAluno frmAluno = new FrmAluno(id, alunoListModel, linhaSelecionada, aluno);   
             frmAluno.setVisible(true);
         }           
     }
@@ -281,29 +281,26 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
             int id = (int) tbPesquisa.getValueAt(linhaSelecionada, 0);
             NotasDao notasDao = new NotasDao();
             Notas notas = notasDao.findById(id);            
-            FrmNotas frmNotas = new FrmNotas(true, id, notasListModel, linhaSelecionada, notas);  
+            FrmNotas frmNotas = new FrmNotas(id, notasListModel, linhaSelecionada, notas);  
             frmNotas.setVisible(true);
         }    
     }
     
     private void novoAluno(){
         int linhaSelecionada = tbPesquisa.getSelectedRow();           
-        int id = 0;
-        FrmAluno frmAluno = new FrmAluno(false, id, alunoListModel, linhaSelecionada, null);
+        FrmAluno frmAluno = new FrmAluno(0, alunoListModel, linhaSelecionada, null);
         frmAluno.setVisible(true);                
     }
     
     private void novasNotas(){        
         int linhaSelecionada = tbPesquisa.getSelectedRow();           
-        int id = 0;
-        FrmNotas frmNotas = new FrmNotas(false, id, notasListModel, linhaSelecionada, null);
+        FrmNotas frmNotas = new FrmNotas(0, notasListModel, linhaSelecionada, null);
         frmNotas.setVisible(true);          
     }
     
     private void novoProfessor(){
         int linhaSelecionada = tbPesquisa.getSelectedRow();           
-        int id = 0;
-        FrmProfessor frmProfessor = new FrmProfessor(false, id, professorListModel, linhaSelecionada, null);
+        FrmProfessor frmProfessor = new FrmProfessor(0, professorListModel, linhaSelecionada, null);
         frmProfessor.setVisible(true);           
     }
     
@@ -360,7 +357,7 @@ public class FrmPesquisa extends javax.swing.JInternalFrame {
                         (double)tbPesquisa.getValueAt(linhaSelecionada, 3) + 
                         (double)tbPesquisa.getValueAt(linhaSelecionada, 4) +
                         (double)tbPesquisa.getValueAt(linhaSelecionada, 5)) / 4;
-        JOptionPane.showMessageDialog(null, "A médiia do aluno é: " + String.valueOf(media), "Média do(a) aluno " + 
+        JOptionPane.showMessageDialog(null, "A média do aluno é: " + String.valueOf(media), "Média do(a) aluno " + 
                                       tbPesquisa.getValueAt(linhaSelecionada, 7), DO_NOTHING_ON_CLOSE);
     }
 }

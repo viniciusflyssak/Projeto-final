@@ -1,0 +1,6 @@
+Erro na NotasDao:
+ERROR: insert or update on table "notas" violates foreign key constraint "fk_notas_alunos"
+  Detalhe: Key (id_aluno)=(1) is not present in table "alunos"., ocorrido neste hora: domingo, 4 de dezembro de 2022
+Erro na ProfessorDao:
+ERROR: update or delete on table "professores" violates foreign key constraint "fk_notas_professores" on table "notas"
+  Detalhe: Key (id_professor)=(5) is still referenced from table "notas"., ocorrido neste hora: domingo, 4 de dezembro de 2022

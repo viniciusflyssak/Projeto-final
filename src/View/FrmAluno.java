@@ -9,32 +9,28 @@ import Models.AlunoListModel;
 import javax.swing.DefaultComboBoxModel;
 
 public class FrmAluno extends javax.swing.JDialog {
-    private final boolean editar;
     private final int id; 
     private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private final AlunoListModel alunoListModel;
     private final int linhaSelecionada;
     private Aluno aluno;
     
-    public FrmAluno(boolean editar, int id, AlunoListModel alunoListModel, int linhaSelecionada, Aluno aluno) {
+    public FrmAluno(int id, AlunoListModel alunoListModel, int linhaSelecionada, Aluno aluno) {
         initComponents();
         this.aluno = aluno;
         cbSexo.setModel(new DefaultComboBoxModel(Genero.values()));
-        this.editar = editar;
         this.alunoListModel = alunoListModel;
         this.linhaSelecionada = linhaSelecionada;
         if (id > 0){
             this.id = id;
-        }else{
-            this.id = 0;
-        }
-        if (editar){
             tfCpf.setText(aluno.getCpf());
             tfDataNasc.setText(dtf.format(aluno.getDataNasc()));
             tfEmail.setText(aluno.getEmail());
             tfNome.setText(aluno.getNome());
             tfSerie.setText(aluno.getSerie());
             cbSexo.setSelectedIndex(aluno.getGenero().ordinal());
+        }else{
+            this.id = 0;
         }
     }
 
@@ -267,7 +263,7 @@ public class FrmAluno extends javax.swing.JDialog {
     private void salvar(){
         getAluno();
         AlunoDao alunoDao = new AlunoDao();
-        if (!this.editar) {
+        if (this.id == 0) {
             alunoDao.insert(aluno);
             this.alunoListModel.insertModel(aluno);
             dispose();

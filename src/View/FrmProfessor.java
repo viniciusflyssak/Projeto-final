@@ -9,32 +9,28 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.DefaultComboBoxModel;
 
 public class FrmProfessor extends javax.swing.JDialog {
-    private final boolean editar;
     private final ProfessorListModel professorListModel;
     private final int id;
     private final int linhaSelecionada;
     private Professor professor;
     private final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     
-    public FrmProfessor(boolean editar, int id,  ProfessorListModel  professorListModel, int linhaSelecionada, Professor professor) {
+    public FrmProfessor(int id,  ProfessorListModel  professorListModel, int linhaSelecionada, Professor professor) {
         initComponents();
         this.professor = professor;
         cbSexo.setModel(new DefaultComboBoxModel(Genero.values()));
-        this.editar = editar;
         this.professorListModel = professorListModel;
         this.linhaSelecionada = linhaSelecionada;
         if (id > 0){
             this.id = id;
-        }else{
-            this.id = 0;
-        }
-        if (editar){
             tfCpf.setText(professor.getCpf());
             tfDataNasc.setText(dtf.format(professor.getDataNasc()));
             tfEmail.setText(professor.getEmail());
             tfNome.setText(professor.getNome());
             tfDisciplina.setText(professor.getDisciplina());
             cbSexo.setSelectedIndex(professor.getGenero().ordinal());
+        }else{
+            this.id = 0;
         }
     }
 
@@ -277,7 +273,7 @@ public class FrmProfessor extends javax.swing.JDialog {
     private void salvar(){
         getProfessor();
         ProfessorDao professorDao = new ProfessorDao();
-        if (!this.editar) {
+        if (this.id == 0) {
             professorDao.insert(professor);
             this.professorListModel.insertModel(professor);
             dispose();

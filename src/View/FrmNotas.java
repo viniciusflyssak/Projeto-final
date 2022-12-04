@@ -7,26 +7,20 @@ import Entidades.Notas;
 import Entidades.Professor;
 
 public class FrmNotas extends javax.swing.JDialog {
-    private final boolean editar;
     private final int id; 
     private Notas notas;
     private final int linhaSelecionada;
     private final NotasListModel notasListModel;
     
-    public FrmNotas(boolean editar, int id,  NotasListModel notasListModel, int linhaSelecionada, Notas notas) {
+    public FrmNotas(int id,  NotasListModel notasListModel, int linhaSelecionada, Notas notas) {
         initComponents();
         this.tfNomeAluno.setEditable(false);
         this.tfNomeProfessor.setEditable(false);
         this.notas = notas;
-        this.editar = editar;
         this.notasListModel = notasListModel;
         this.linhaSelecionada = linhaSelecionada;
         if (id > 0){
             this.id = id;
-        }else{
-            this.id = 0;
-        }
-        if (editar){
             tfIdAluno.setText(String.valueOf(this.notas.getAluno().getId()));
             tfIdProfessor.setText(String.valueOf(this.notas.getProfessor().getId()));
             tfNomeAluno.setText(String.valueOf(this.notas.getAluno().getNome()));
@@ -36,6 +30,8 @@ public class FrmNotas extends javax.swing.JDialog {
             tfNota2.setText(String.valueOf(this.notas.getNota2()));
             tfNota3.setText(String.valueOf(this.notas.getNota3()));
             tfNota4.setText(String.valueOf(this.notas.getNota4()));
+        }else{
+            this.id = 0;
         }
     }
     
@@ -341,7 +337,7 @@ public class FrmNotas extends javax.swing.JDialog {
     private void salvar(){
         getNotas();
         NotasDao notasDao = new NotasDao();
-        if (!this.editar) {
+        if (this.id == 0) {
             notasDao.insert(notas);
             this.notasListModel.insertModel(notas);
             dispose();
@@ -358,7 +354,7 @@ public class FrmNotas extends javax.swing.JDialog {
             notas.setAluno(new Aluno());
         }
         notas.getAluno().setId(Integer.valueOf(tfIdAluno.getText()));
-        notas.buscaProfessor(); 
+        notas.buscaAluno();
         if (notas.getAluno() != null){
             tfNomeAluno.setText(notas.getAluno().getNome());
         }else{
